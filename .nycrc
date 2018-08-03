@@ -1,0 +1,18 @@
+{
+  "include": [
+    "lib/**/*.ts"
+  ],
+  "extension": [
+    ".ts"
+  ],
+  "require": [
+    "ts-node/register"
+  ],
+  "reporter": [
+    "text-summary",
+    "html"
+  ],
+  "cache": true,
+  "sourceMap": true,
+  "instrument": true
+}

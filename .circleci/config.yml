@@ -1,0 +1,79 @@
+version: 2
+
+defaults: &defaults
+  working_directory: ~/repo
+  docker:
+    - image: circleci/node:10
+
+jobs:
+  test:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+            keys:
+            - node-modules
+      - run: npm install
+      - run:
+          name: Run lint
+          command: npm run test:lint
+      - run:
+          name: Run type check
+          command: npm run test:type-check
+      - run:
+          name: Run tests & coverage
+          command: npm run test:coveralls
+      - save_cache:
+            paths:
+              - node_modules
+            key: node-modules
+      - persist_to_workspace:
+          root: ~/repo
+          paths: .
+  build:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Build package
+          command: npm run build
+
+  publish:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Authenticate on npm registry
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+      - run:
+          name: Publish on npm registry
+          command: npm publish
+
+workflows:
+  version: 2
+  main-flow:
+    jobs:
+      - test:
+          filters:
+            tags:
+              only:
+                - /.*/
+      - build:
+          filters:
+            branches:
+              ignore:
+                - /.*/
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
+      - publish:
+          requires:
+            - test
+            - build
+          filters:
+            branches:
+              ignore:
+                - /.*/
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
