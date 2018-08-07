@@ -1,9 +1,9 @@
-# Swift Cache [![Coverage Status](https://coveralls.io/repos/github/OlivierCuyp/swift-cache/badge.svg?branch=master)](https://coveralls.io/github/OlivierCuyp/swift-cache?branch=master) [![CircleCI](https://circleci.com/gh/oliviercuyp/swift-cache/tree/master.svg?style=svg&circle-token=1bee775b4562b028a19ed8d671116b399bbb9594)](https://circleci.com/gh/oliviercuyp/swift-cache/tree/master)
+# Swift Cache [![Coverage Status](https://coveralls.io/repos/github/OlivierCuyp/swift-cache/badge.svg?branch=master)](https://coveralls.io/github/OlivierCuyp/swift-cache?branch=master) [![CircleCI](https://circleci.com/gh/OlivierCuyp/swift-cache.svg?style=svg)](https://circleci.com/gh/OlivierCuyp/swift-cache)
 
 Cache based on the fast [msgpack](https://msgpack.org) serialization
 
 A simple & really swift caching package inspired from Redis basic commands.
-There is only 4 methods: `set`, `get`, `del` and `keys`.
+There is only 6 methods: `set`, `get`, `mget`, `keys`, `del` and `flush`.
 Each entry has an optional **ttl**.
 All expired keys are cleaned on periodic garbage collection.
 
@@ -16,8 +16,11 @@ $ npm install swift-cache
 ## Usage
 
 ```js
-const SwiftCache = require('swift-cache')
-// Sets the cleaning interval of the expired keys to 120 sec (default: 60 sec)
+// require SwitchCache
+const SwiftCache = require('swift-cache').SwiftCache
+// import SwitchCache
+import {SwiftCache} from 'swift-cache'
+// create the cache with a cleaning interval of the expired keys set to 120 sec (default: 60 sec)
 const cache = new SwiftCache({cleanInterval: 120})
 // this will cache the value with a ttl of 60 sec (ttl is optional)
 cache.set('key', 'value', 60)

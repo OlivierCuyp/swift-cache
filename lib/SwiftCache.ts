@@ -13,7 +13,7 @@ interface Entry {
   expire: number
 }
 
-export default class SwiftCache {
+export class SwiftCache {
   private data: Dictionnary<Entry>
   private cleanInterval: number
 

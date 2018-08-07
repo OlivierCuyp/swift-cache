@@ -6,14 +6,30 @@ defaults: &defaults
     - image: circleci/node:10
 
 jobs:
-  test:
+  install:
     <<: *defaults
     steps:
       - checkout
       - restore_cache:
-            keys:
+          keys:
             - node-modules
       - run: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: node-modules
+      - persist_to_workspace:
+          root: ~/repo
+          paths: .
+  test:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Setup environment variables
+          command: |
+            echo 'export COVERALLS_SERVICE_JOB_ID="$CIRCLE_BUILD_NUM"' >> $BASH_ENV
       - run:
           name: Run lint
           command: npm run test:lint
@@ -23,13 +39,6 @@ jobs:
       - run:
           name: Run tests & coverage
           command: npm run test:coveralls
-      - save_cache:
-            paths:
-              - node_modules
-            key: node-modules
-      - persist_to_workspace:
-          root: ~/repo
-          paths: .
   build:
     <<: *defaults
     steps:
@@ -38,7 +47,9 @@ jobs:
       - run:
           name: Build package
           command: npm run build
-
+      - persist_to_workspace:
+          root: ~/repo
+          paths: .
   publish:
     <<: *defaults
     steps:
@@ -55,12 +66,21 @@ workflows:
   version: 2
   main-flow:
     jobs:
+      - install:
+          filters:
+            tags:
+              only:
+                - /.*/
       - test:
+          requires:
+            - install
           filters:
             tags:
               only:
                 - /.*/
       - build:
+          requires:
+            - install
           filters:
             branches:
               ignore:

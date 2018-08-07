@@ -1,4 +1,4 @@
-import SwiftCache from '../lib/SwiftCache'
+import {SwiftCache} from '../lib/SwiftCache'
 import {expect} from 'chai'
 import sinon, {SinonFakeTimers} from 'sinon'
 
