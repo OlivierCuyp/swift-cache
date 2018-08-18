@@ -16,12 +16,13 @@ interface Entry {
 export class SwiftCache {
   private data: Dictionnary<Entry>
   private cleanInterval: number
+  private timer: NodeJS.Timer
 
   constructor(options: IOptions = {}) {
     this.data = {}
     this.cleanInterval = options.cleanInterval || 60
 
-    setInterval(() => {
+    this.timer = setInterval(() => {
       // Clean expired entries
       for (const key in this.data) {
         if (this.data[key].expire < Date.now()) {
@@ -68,5 +69,9 @@ export class SwiftCache {
     for (const key of keys) {
       this.del(key)
     }
+  }
+
+  end(): void {
+    clearInterval(this.timer)
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "swift-cache",
-  "description": "Simple fast asynchronous memory cache for NodeJS.",
+  "description": "Simple fast memory cache for NodeJS.",
   "keywords": [
     "buffer",
     "cache",
@@ -22,6 +22,7 @@
     "test:lint": "eslint 'lib/**/*.ts'",
     "test:type-check": "tsc --noEmit",
     "test:cover": "nyc --reporter=text-summary --reporter=html npm test",
+    "test:all": "npm run test:type-check & npm run test:cover",
     "test:coveralls": "nyc --reporter=text-lcov npm test | coveralls",
     "preversion": "npm run test:lint && npm run test:type-check && npm run test"
   },

@@ -3,9 +3,9 @@
 Cache based on the fast [msgpack](https://msgpack.org) serialization
 
 A simple & really swift caching package inspired from Redis basic commands.
-There is only 6 methods: `set`, `get`, `mget`, `keys`, `del` and `flush`.
+There is only 7 methods: `set`, `get`, `mget`, `keys`, `del`, `flush` and `end`.
 Each entry has an optional **ttl**.
-All expired keys are cleaned on periodic garbage collection.
+All expired entries are cleaned on periodic garbage collection.
 
 ## Installation
 
@@ -34,6 +34,8 @@ const keys = cache.keys()
 cache.del('key')
 // this will delete all the entries from the cache
 cache.flush()
+// this will delete the clean timer. It should be called when cache is not needed anymore
+cache.end()
 ```
 
 ## Npm scripts
@@ -61,6 +63,11 @@ $ npm test:type
 ```sh
 $ npm test:cover
 ```
+
+## Reporting bugs and contributing
+
+If you want to report a bug or request a feature, please open an issue.
+If want to help us improve hbot, fork and make a pull request. But before drop an eye on [emoji commit](https://github.com/slashsBin/styleguide-git-commit-message).
 
 ## Repository
 
