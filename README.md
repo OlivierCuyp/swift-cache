@@ -67,11 +67,11 @@ $ npm test:cover
 ## Reporting bugs and contributing
 
 If you want to report a bug or request a feature, please open an issue.
-If want to help us improve hbot, fork and make a pull request. But before drop an eye on [emoji commit](https://github.com/slashsBin/styleguide-git-commit-message).
+If want to help us improve swift-cache, fork and make a pull request. But before drop an eye on [emoji commit](https://github.com/slashsBin/styleguide-git-commit-message).
 
 ## Repository
 
-- [https://github.com/oliviercuyp/swift-cache](https://github.com/kawanet/swift-cache)
+- [https://github.com/oliviercuyp/swift-cache](https://github.com/oliviercuyp/swift-cache)
 
 ## See Also
 
